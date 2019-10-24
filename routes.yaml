@@ -4,6 +4,9 @@ routes:
   /account/: members/account
 
 collections:
+  /blog/:
+    permalink: /blog/{slug}/
+    filter: tag:blog
   /:
     permalink: /{slug}/
     template: index
