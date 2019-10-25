@@ -15,7 +15,34 @@ const colorFunction = require('postcss-color-function');
 const cssnano = require('cssnano');
 const customProperties = require('postcss-custom-properties');
 const easyimport = require('postcss-easy-import');
+const webpack = require('webpack');
 
+const webpackStream = require('webpack-stream');
+
+function pack(done) {
+    const mode = process.env.NODE_ENV || 'development';
+
+    pump([
+        src('assets/svelte/svelte.js', {sourcemaps: true}),
+        webpackStream({
+            output: {
+                filename: 'svelte.js'
+            },
+            module: {
+                rules: [
+                    {
+                    test: /\.svelte$/,
+                    exclude: /node_modules/,
+                    use: 'svelte-loader'
+                    }
+                ]
+            },
+            mode
+        }, webpack),
+        dest('./assets/built/'),
+        livereload()
+    ], handleError(done));
+}
 function serve(done) {
     livereload.listen();
     done();
@@ -81,8 +108,9 @@ function zipper(done) {
 
 const cssWatcher = () => watch('assets/css/**', css);
 const hbsWatcher = () => watch(['*.hbs', 'partials/**/*.hbs'], hbs);
-const watcher = parallel(cssWatcher, hbsWatcher);
-const build = series(css, js);
+const svelteWatcher = () => watch('assets/svelte/**').on('change',pack);
+const watcher = parallel(cssWatcher, hbsWatcher, svelteWatcher);
+const build = series(css, pack,js);
 const dev = series(build, serve, watcher);
 
 exports.build = build;
@@ -208,3 +236,4 @@ const release = () => {
 };
 
 exports.release = release;
+exports.pack = pack;

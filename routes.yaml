@@ -2,8 +2,13 @@ routes:
   /signup/: members/signup
   /signin/: members/signin
   /account/: members/account
-
+  /api/courses/:
+    template: api/course
+    content_type: json
 collections:
+  /courses/:
+    permalink: /courses/{slug}/
+    filter: tag:course
   /blog/:
     permalink: /blog/{slug}/
     filter: tag:blog
@@ -12,5 +17,5 @@ collections:
     template: index
 
 taxonomies:
-  tag: /tag/{slug}/
+  tag: /topic/{slug}/
   author: /author/{slug}/

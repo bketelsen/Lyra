@@ -1,0 +1,12 @@
+ {
+   "data":  [
+{{#get "posts" filter="tag:course" include="tags,authors" as |course|}}
+    {{#foreach course}}
+        {
+            "title":"{{title}}",
+            "description":"{{excerpt}}"
+        } {{plural pagination.total empty='' singular='' plural=','}}
+    {{/foreach}}
+{{/get}}
+    ]
+ }

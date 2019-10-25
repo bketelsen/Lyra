@@ -12,7 +12,6 @@ into the {body} of the default.hbs template --}}
 
 <main id="site-main" class="site-main outer">
     <div class="inner">
-
         <article class="post-full {{post_class}} {{#unless feature_image}}no-image{{/unless}}">
 
             <header class="post-full-header">
@@ -84,7 +83,6 @@ into the {body} of the default.hbs template --}}
 
                 </div>
             </header>
-
             {{#if access}}
             {{!-- if the user has access to this post, show it to them --}}
 
@@ -105,6 +103,11 @@ into the {body} of the default.hbs template --}}
                     />
                 </figure>
                 {{/if}}
+                <section class="post-full-content">
+                    <div class="post-content">
+                        <div class="svelteapp"></div>
+                    </div>
+                </section>
                 <section class="post-full-content">
                     <div class="post-content">
                         {{content}}
@@ -279,4 +282,5 @@ $(document).ready(function () {
 
 });
 </script>
+    <script type="text/javascript" src="{{asset "built/svelte.js"}}"></script>
 {{/contentFor}}

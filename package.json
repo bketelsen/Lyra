@@ -15,6 +15,7 @@
         "dev": "gulp",
         "zip": "gulp zip",
         "test": "gscan .",
+        "pack": "gulp pack",
         "pretest": "gulp build",
         "preship": "yarn test",
         "ship": "STATUS=$(git status --porcelain); echo $STATUS; if [ -z \"$STATUS\" ]; then yarn version && git push --follow-tags; fi"
@@ -84,5 +85,11 @@
                 "width": 2000
             }
         }
+    },
+    "dependencies": {
+        "svelte": "^3.12.1",
+        "svelte-loader": "^2.13.6",
+        "webpack": "^4.41.2",
+        "webpack-stream": "^5.2.1"
     }
 }
